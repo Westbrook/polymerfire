@@ -17,8 +17,20 @@ thing! https://github.com/PolymerLabs/tedium/issues
 ## &lt;firebase-app&gt;
 
 The firebase-app element is used for initializing and configuring your
-connection to firebase.
+connection to firebase. It is only necessary to include this element once
+in your application, and it equivalent to calling `firebase.initializeApp()`
+in the JavaScript SDK.
 
+```html
+<firebase-app
+  auth-domain="polymerfire-test.firebaseapp.com"
+  database-url="https://polymerfire-test.firebaseio.com/"
+  api-key="AIzaSyDTP-eiQezleFsV2WddFBAhF_WEzx_8v_g"
+  storage-bucket="polymerfire-test.appspot.com"
+  messaging-sender-id="544817973908"
+  project-id="polymerfire-test">
+</firebase-app>
+```
 
 ## &lt;firebase-auth&gt;
 
@@ -59,8 +71,6 @@ This popup sign-in will then attempt to sign in using Google as an OAuth
 provider since there was no provider argument specified and since `"google"` was
 defined as the default provider.
 
-
-
 ## &lt;firebase-document&gt;
 
 The firebase-document element is an easy way to interact with a firebase
@@ -83,8 +93,6 @@ and stored.
 `<firebase-document>` needs some information about how to talk to Firebase.
 Set this configuration by adding a `<firebase-app>` element anywhere in your
 app.
-
-
 
 ## &lt;firebase-query&gt;
 
@@ -123,4 +131,27 @@ Polymer({
 </script>
 ```
 
+## Polymer.FirestoreMixin
 
+A class mixin that provides Cloud Firestore bindings to your Polymer elements.
+Import `firebase-firestore-mixin.html` to make the mixin available.
+
+Example usage:
+
+```js
+class MyElement extends Polymer.FirestoreMixin(Polymer.Element) {
+  // ...
+  static get properties() {
+    return {
+      user: {
+        type: Object,
+        doc: 'users/{uid}'
+      },
+      messages: {
+        type: Array,
+        collection: 'users/{uid}/messages'
+      }
+    }
+  }
+}
+```
