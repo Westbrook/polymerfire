@@ -216,7 +216,7 @@ if (typeof Polymer === 'undefined') {
       _firestoreUpdateBinding(name, ...args) {
         this._firestoreUnlisten(name);
         const config = this._firestoreProps[name];
-        const isDefined = (x) => x !== undefined;
+        const isDefined = (x) => x && typeof x === 'string';
         const propArgs = args.slice(0, config.props.length).filter(isDefined);
         const observesArgs = args.slice(config.props.length).filter(isDefined);
 
