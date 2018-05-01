@@ -225,7 +225,10 @@ if (typeof Polymer === 'undefined') {
           observesArgs.length === config.observes.length;
 
         if (propArgsReady && observesArgsReady) {
-          this.db = this.db || firebase.firestore();
+          if (!this.db) {
+            this.db = this.db || firebase.firestore();
+            this.db.settings({timestampsInSnapshots: true});
+          }
           const collPath = stitch(config.literals, propArgs);
           const assigner = this._firestoreAssigner(name, config);
 
